@@ -1,0 +1,18 @@
+Result for running Dominion tests:
+unittest1.c:
+Testing if numHandCards() reports correct individual card total for 2 players.
+numHandCards(): PASS if total cards in player 1's hand equals 5
+numHandCards(): PASS if total cards in player 2's hand equals 5
+Testing if numHandCards() reports correct individual card total for 3 players.
+numHandCards(): PASS if total cards in player 1's hand equals 5
+numHandCards(): PASS if total cards in player 2's hand equals 5
+numHandCards(): PASS if total cards in player 3's hand equals 5
+Testing if numHandCards() reports correct individual card total for 4 players.
+numHandCards(): PASS if total cards in player 1's hand equals 5
+numHandCards(): PASS if total cards in player 2's hand equals 5
+numHandCards(): PASS if total cards in player 3's hand equals 5
+numHandCards(): PASS if total cards in player 4's hand equals 5
+File 'dominion.c'
+Lines executed:19.67% of 610
+Creating 'dominion.c.gcov'
+
