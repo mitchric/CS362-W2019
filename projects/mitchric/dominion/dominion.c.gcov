@@ -313,8 +313,8 @@
     #####:  308:  return 0;
         -:  309:}
         -:  310:
-        9:  311:int numHandCards(struct gameState *state) {
-        9:  312:  return state->handCount[ whoseTurn(state) ];
+    #####:  311:int numHandCards(struct gameState *state) {
+    #####:  312:  return state->handCount[ whoseTurn(state) ];
         -:  313:}
         -:  314:
     #####:  315:int handCard(int handPos, struct gameState *state) {

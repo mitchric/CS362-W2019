@@ -27,11 +27,15 @@ interface.o: interface.h interface.c
 unittest1: unittest1.c dominion.o rngs.o
 	gcc -o unittest1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
 
-unittestresults.out: unittest1.c dominion.c rngs.c
+unittestresults.out: unittest1.c unittest2.c dominion.c rngs.c
 	echo "Result for running Dominion tests:" > unittestresults.out
 	echo "unittest1.c:" >> unittestresults.out
 	gcc -o unittest1 dominion.c unittest1.c rngs.c $(CFLAGS)
 	./unittest1 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+	echo "unittest2.c:" >> unittestresults.out
+	gcc -o unittest2 dominion.c unittest2.c rngs.c $(CFLAGS)
+	./unittest2 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
 
 runtests: testDrawCard 
