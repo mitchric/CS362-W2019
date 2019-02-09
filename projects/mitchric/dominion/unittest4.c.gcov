@@ -1,0 +1,42 @@
+        -:    0:Source:unittest4.c
+        -:    0:Graph:unittest4.gcno
+        -:    0:Data:unittest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include <stdio.h>
+        -:    3:#include "rngs.h"
+        -:    4:#include <stdlib.h>
+        -:    5:
+        1:    6:void testIsGameOver()
+        -:    7:{
+        1:    8:    int numOfPlayers = 2;
+        1:    9:    int randomSeed = 100;
+        -:   10:    struct gameState G;
+        1:   11:    int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+        -:   12:                 sea_hag, tribute, smithy};
+        -:   13:
+        1:   14:    initializeGame(numOfPlayers, k, randomSeed, &G);
+        -:   15:
+        1:   16:    G.supplyCount[province] = 0;
+        1:   17:    if (isGameOver(&G) == 1)
+        1:   18:	printf("isGameOver(): PASS if isGameOver() returns 1 when G.supplyCount[province] is set to 0.\n");
+        -:   19:    else
+    #####:   20:	printf("isGameOver(): FAIL if isGameOver() returns 0 when G.supplyCount[province] is set to 0.\n");
+        -:   21:
+        1:   22:    G.supplyCount[0] = 0;    
+        1:   23:    G.supplyCount[1] = 0;
+        1:   24:    G.supplyCount[2] = 0;
+        1:   25:    if (isGameOver(&G) == 1)
+        1:   26:	printf("isGameOver(): PASS if isGameOver() returns 1 when at least 3 indices are set to 0.\n");
+        -:   27:    else
+    #####:   28:	printf("isGameOver(): FAIL if isGameOver() returns 0 when at least 3 indices are set to 0.\n");
+        1:   29:}
+        -:   30:
+        1:   31:int main(int argc, char **argv)
+        -:   32:{
+        1:   33:    testIsGameOver();
+        -:   34:
+        1:   35:    return 0;
+        -:   36:}
+        -:   37:

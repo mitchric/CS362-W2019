@@ -1,0 +1,59 @@
+        -:    0:Source:unittest3.c
+        -:    0:Graph:unittest3.gcno
+        -:    0:Data:unittest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include <stdio.h>
+        -:    3:#include "rngs.h"
+        -:    4:#include <stdlib.h>
+        -:    5:
+        1:    6:void testEndTurn()
+        -:    7:{
+        -:    8:    int i;
+        1:    9:    int numOfPlayers = 2;
+        1:   10:    int randomSeed = 100;
+        -:   11:    struct gameState G;
+        1:   12:    int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+        -:   13:                 sea_hag, tribute, smithy};
+        -:   14:
+        1:   15:    initializeGame(numOfPlayers, k, randomSeed, &G);
+        -:   16:
+        3:   17:    for (i = 0; i < numOfPlayers; ++i) {
+        2:   18:        endTurn(&G);
+        2:   19:        if (i == G.whoseTurn - 1) {
+        1:   20:            if (G.whoseTurn == i + 1) 
+        1:   21:                printf("endTurn(): PASS if player %d finished their turn. It's now player %d's turn.\n", i, i + 1);
+        -:   22:            else 
+    #####:   23:                printf("endTurn(): FAIL if player %d did not finish their turn and it's not player %d's turn.\n", i, i + 1);
+        1:   24:        } else if (i == G.whoseTurn + 1) {
+        1:   25:            if (G.whoseTurn == i - 1)
+        1:   26:                printf("endTurn(): PASS if player %d finished their turn. It's now player %d's turn.\n", i, i - 1);
+        -:   27:            else
+    #####:   28:                printf("endTurn(): FAIL if player %d did not finish their turn and it's not player %d's turn.\.n", i, i - 1);
+        -:   29:        }
+        2:   30:        if (G.handCount[i] == 0) 
+        2:   31:            printf("endTurn(): PASS if player %d's hand count equals 0.\n", i);
+        -:   32:        else 
+    #####:   33:            printf("endTurn(): FAIL if player %d's hand count does not equal 0.\n", i);
+        2:   34:        if (i == G.whoseTurn - 1) {
+        1:   35:            if (G.handCount[G.whoseTurn] == 5)
+        1:   36:                printf("endTurn(): PASS if player %d's hand count equals 5.\n", i + 1);
+        -:   37:            else 
+    #####:   38:                printf("endTurn(): FAIL if player %d's hand count does not equal 5.\n", i + 1);
+        1:   39:        } else if (i == G.whoseTurn + 1) {
+        1:   40:            if (G.handCount[G.whoseTurn] == 5)
+        1:   41:                printf("endTurn(): PASS if player %d's hand count equals 5.\n", i - 1);
+        -:   42:            else
+    #####:   43:                printf("endTurn(): FAIL if player %d's hand count does not equal 5.\n", i - 1);
+        -:   44:        }
+        -:   45:    }
+        1:   46:}
+        -:   47:
+        1:   48:int main(int argc, char **argv)
+        -:   49:{
+        1:   50:    testEndTurn();
+        -:   51:
+        1:   52:    return 0;
+        -:   53:}
+        -:   54:

@@ -5,15 +5,16 @@
 
 void testWhoseTurn()
 {
+    int i, j;
     int randomSeed = 100;
     struct gameState G;
     int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
                  sea_hag, tribute, smithy};
 
-    for (int i = 2; i <= MAX_PLAYERS; ++i) {
+    for (i = 2; i <= MAX_PLAYERS; ++i) {
         initializeGame(i, k, randomSeed, &G);
         printf("Testing if whoseTurn() reports correct turn index (zero based) for %d players.\n", i);
-        for (int j = 0; j < i; ++j) {
+        for (j = 0; j < i; ++j) {
             if (whoseTurn(&G) == j)
                 printf("whoseTurn(): PASS if turn equals player %d\n", j);
             else 
