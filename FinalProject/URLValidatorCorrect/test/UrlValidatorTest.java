@@ -23,7 +23,7 @@ import junit.framework.TestCase;
  * @version $Revision$
  */
 public class UrlValidatorTest extends TestCase {
-
+	
    private final boolean printStatus = false;
    private final boolean printIndex = false;//print index that indicates current scheme,host,port,path, query test were using.
 
@@ -596,5 +596,8 @@ protected void setUp() {
                             new ResultPair("HtTp", true),
                             new ResultPair("telnet", false)};
 
-
+   public static void main(String[] args) {
+	   UrlValidatorTest fc = new UrlValidatorTest("test");
+	   fc.testIsValid();
+   }
 }
