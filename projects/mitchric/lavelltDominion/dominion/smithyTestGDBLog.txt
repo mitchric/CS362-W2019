@@ -1,0 +1,87 @@
+1	#include "dominion.h"
+2	#include <stdio.h>
+3	#include "rngs.h"
+4	#include <stdlib.h>
+5	#include <string.h>
+6	#include <assert.h>
+7	
+8	#define TESTCARD "smithy"
+9	
+10	int main(int argc, char** argv) {
+The program is not being run.
+11	    
+12	    struct gameState G, testG;
+13	
+14	    int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+15	           sea_hag, tribute, smithy};
+16	
+17	    int numOfPlayers = 2;
+18	    int choice1 = 0, choice2 = 0, choice3 = 0; 
+19	    int handPos = 0, bonus = 0, newCards = 3, discarded = 1;
+20	    int currPlayer = 0;
+21	
+22	
+23	    int seed = 1000;
+24	
+25	    initializeGame(numOfPlayers, k, seed, &G);
+26	
+27	    printf("----------------Testing Card: %s-----------------\n", TESTCARD);
+28	
+29	    memcpy(&testG, &G, sizeof(struct gameState));
+30	
+31	    cardEffect(smithy, choice1, choice2, choice3, &testG, handPos, &bonus);
+32	
+33	    printf("hand count = %d, expected = %d\n", testG.handCount[currPlayer], G.handCount[currPlayer] + newCards - discarded); 
+34	    printf("deck count = %d, expected = %d\n", testG.deckCount[currPlayer], G.deckCount[currPlayer] - newCards);
+35	    //assert(testG.handCount[currPlayer] == G.handCount[currPlayer] + newCards - discarded);
+36	    //assert(testG.deckCount[currPlayer] == G.deckCount[currPlayer] - newCards);
+37	    
+38	    return 0;
+39	}
+Breakpoint 1 at 0x1c66: file smithyTest.c, line 31.
+Starting program: /home/rich/Desktop/cs362/CS362-W2019/projects/mitchric/lavelltDominion/dominion/smithyTest 
+
+Breakpoint 1, main (argc=1, argv=0x7fffffffddb8) at smithyTest.c:31
+31	    cardEffect(smithy, choice1, choice2, choice3, &testG, handPos, &bonus);
+cardEffect (card=13, choice1=0, choice2=0, choice3=0, state=0x7fffffff7600, handPos=0, bonus=0x7fffffff0ee8) at dominion.c:874
+874	  int currentPlayer = whoseTurn(state);
+888	  switch (card)
+1066		  return effectSmithy(currentPlayer, state, handPos);
+Breakpoint 2 at 0x5555555596b7: file dominion.c, line 1066.
+1455	}
+Starting program: /home/rich/Desktop/cs362/CS362-W2019/projects/mitchric/lavelltDominion/dominion/smithyTest 
+
+Breakpoint 1, main (argc=1, argv=0x7fffffffddb8) at smithyTest.c:31
+31	    cardEffect(smithy, choice1, choice2, choice3, &testG, handPos, &bonus);
+cardEffect (card=13, choice1=0, choice2=0, choice3=0, state=0x7fffffff7600, handPos=0, bonus=0x7fffffff0ee8) at dominion.c:874
+874	  int currentPlayer = whoseTurn(state);
+888	  switch (card)
+
+Breakpoint 2, cardEffect (card=13, choice1=0, choice2=0, choice3=0, state=0x7fffffff7600, handPos=0, bonus=0x7fffffff0ee8) at dominion.c:1066
+1066		  return effectSmithy(currentPlayer, state, handPos);
+effectSmithy (currentPlayer=0, state=0x7fffffff7600, handPos=0) at dominion.c:685
+685		for (i = 0; i < 2; i++) // 3 is original
+687			drawCard(currentPlayer, state);
+$1 = 5
+$2 = 5
+685		for (i = 0; i < 2; i++) // 3 is original
+687			drawCard(currentPlayer, state);
+685		for (i = 0; i < 2; i++) // 3 is original
+691		discardCard(handPos, currentPlayer, state, 0);
+692		return 0;
+$3 = 6
+$4 = 3
+$5 = 3
+693	}
+cardEffect (card=13, choice1=0, choice2=0, choice3=0, state=0x7fffffff7600, handPos=0, bonus=0x7fffffff0ee8) at dominion.c:1455
+1455	}
+main (argc=1, argv=0x7fffffffddb8) at smithyTest.c:33
+33	    printf("hand count = %d, expected = %d\n", testG.handCount[currPlayer], G.handCount[currPlayer] + newCards - discarded); 
+34	    printf("deck count = %d, expected = %d\n", testG.deckCount[currPlayer], G.deckCount[currPlayer] - newCards);
+38	    return 0;
+39	}
+__libc_start_main (main=0x555555555aea <main>, argc=1, argv=0x7fffffffddb8, init=<optimized out>, fini=<optimized out>, 
+    rtld_fini=<optimized out>, stack_end=0x7fffffffdda8) at ../csu/libc-start.c:344
+344	../csu/libc-start.c: No such file or directory.
+[Inferior 1 (process 11819) exited normally]
+The program is not being run.

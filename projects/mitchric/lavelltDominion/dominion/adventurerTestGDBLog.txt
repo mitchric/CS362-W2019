@@ -1,0 +1,218 @@
+1	#include "dominion.h"
+2	#include <stdio.h>
+3	#include "rngs.h"
+4	#include <stdlib.h>
+5	#include <string.h>
+6	#include <assert.h>
+7	
+8	#define TESTCARD "adventurer"
+9	
+10	int main(int argc, char** argv) {
+11	    
+12	    struct gameState G, testG;
+13	
+14	    int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+15	           sea_hag, tribute, smithy};
+16	
+17	    int numOfPlayers = 2;
+18	    int choice1 = 0, choice2 = 0, choice3 = 0; 
+19	    int handPos = 0, bonus = 0, newCards = 2;
+20	    int currPlayer = 0;
+21	    int deckCounter = 0;
+22	    int firstCard = 0;
+23	    int secondCard = 0;
+24	
+25	
+26	    int seed = 1000;
+27	
+28	    initializeGame(numOfPlayers, k, seed, &G);
+29	
+30	    printf("----------------Testing Card: %s-----------------\n", TESTCARD);
+31	
+32	    memcpy(&testG, &G, sizeof(struct gameState));
+33	
+34	    deckCounter = testG.deckCount[currPlayer];
+35	    // set top 2 cards in deck as treasure cards
+36	    testG.deck[currPlayer][deckCounter - 1] = copper; 
+37	    testG.deck[currPlayer][deckCounter - 2] = copper;
+38	
+39	    cardEffect(adventurer, choice1, choice2, choice3, &testG, handPos, &bonus);
+40	
+41	    firstCard = testG.hand[currPlayer][testG.handCount[currPlayer]-1];
+42	    secondCard = testG.hand[currPlayer][testG.handCount[currPlayer] - 2];
+43	
+44	    printf("hand count = %d, expected = %d\n", testG.handCount[currPlayer], G.handCount[currPlayer] + newCards); 
+45	    printf("deck count = %d, expected = %d\n", testG.deckCount[currPlayer], G.deckCount[currPlayer] - newCards);
+46	    printf("First card in hand = %d, expected %d\n", firstCard, copper);
+47	    printf("Second card in hand = %d, expected %d\n", secondCard, copper);
+48	    //assert(testG.handCount[currPlayer] == G.handCount[currPlayer] + newCards);
+49	    //assert(testG.deckCount[currPlayer] == G.deckCount[currPlayer] - newCards);
+50	    //assert(firstCard == copper);
+Breakpoint 1 at 0x1cf3: file adventurerTest.c, line 39.
+The program is not being run.
+Starting program: /home/rich/Desktop/cs362/CS362-W2019/projects/mitchric/lavelltDominion/dominion/adventurerTest 
+
+Breakpoint 1, main (argc=1, argv=0x7fffffffdda8) at adventurerTest.c:39
+39	    cardEffect(adventurer, choice1, choice2, choice3, &testG, handPos, &bonus);
+cardEffect (card=7, choice1=0, choice2=0, choice3=0, state=0x7fffffff75f0, handPos=0, bonus=0x7fffffff0ed0) at dominion.c:874
+874	  int currentPlayer = whoseTurn(state);
+888	  switch (card)
+910		  return effectAdventurer(currentPlayer, state);
+Breakpoint 2 at 0x555555559265: file dominion.c, line 910.
+effectAdventurer (currentPlayer=0, state=0x7fffffff75f0) at dominion.c:649
+649	int effectAdventurer(int currentPlayer, struct gameState *state) {
+651		int z = 0; // temphand counter
+$1 = 5
+$2 = 5
+652		int cardDrawn = -1; // originally uninit (could break in future)
+653		int drawntreasure = 0;
+656		while (drawntreasure<3) { // 2 is original. playdom 30 results in P0: 0, P1: 51
+657			if (state->deckCount[currentPlayer] <1) {//if the deck is empty we need to shuffle discard and add to deck
+660			drawCard(currentPlayer, state);
+661			cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
+662			if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+663				drawntreasure++;
+656		while (drawntreasure<3) { // 2 is original. playdom 30 results in P0: 0, P1: 51
+657			if (state->deckCount[currentPlayer] <1) {//if the deck is empty we need to shuffle discard and add to deck
+660			drawCard(currentPlayer, state);
+661			cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
+662			if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+663				drawntreasure++;
+656		while (drawntreasure<3) { // 2 is original. playdom 30 results in P0: 0, P1: 51
+657			if (state->deckCount[currentPlayer] <1) {//if the deck is empty we need to shuffle discard and add to deck
+660			drawCard(currentPlayer, state);
+661			cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
+662			if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+663				drawntreasure++;
+656		while (drawntreasure<3) { // 2 is original. playdom 30 results in P0: 0, P1: 51
+670		while (z - 1 >= 0) {
+678		return 0;
+$3 = 2
+$4 = 8
+679	}
+cardEffect (card=7, choice1=0, choice2=0, choice3=0, state=0x7fffffff75f0, handPos=0, bonus=0x7fffffff0ed0) at dominion.c:1455
+1455	}
+main (argc=1, argv=0x7fffffffdda8) at adventurerTest.c:41
+41	    firstCard = testG.hand[currPlayer][testG.handCount[currPlayer]-1];
+42	    secondCard = testG.hand[currPlayer][testG.handCount[currPlayer] - 2];
+44	    printf("hand count = %d, expected = %d\n", testG.handCount[currPlayer], G.handCount[currPlayer] + newCards); 
+45	    printf("deck count = %d, expected = %d\n", testG.deckCount[currPlayer], G.deckCount[currPlayer] - newCards);
+46	    printf("First card in hand = %d, expected %d\n", firstCard, copper);
+47	    printf("Second card in hand = %d, expected %d\n", secondCard, copper);
+53	    return 0;
+54	}
+__libc_start_main (main=0x555555555aea <main>, argc=1, argv=0x7fffffffdda8, init=<optimized out>, fini=<optimized out>, 
+    rtld_fini=<optimized out>, stack_end=0x7fffffffdd98) at ../csu/libc-start.c:344
+344	../csu/libc-start.c: No such file or directory.
+[Inferior 1 (process 11461) exited normally]
+The program is not being run.
+1	#include "dominion.h"
+2	#include <stdio.h>
+3	#include "rngs.h"
+4	#include <stdlib.h>
+5	#include <string.h>
+6	#include <assert.h>
+7	
+8	#define TESTCARD "adventurer"
+9	
+10	int main(int argc, char** argv) {
+11	    
+12	    struct gameState G, testG;
+13	
+14	    int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+15	           sea_hag, tribute, smithy};
+16	
+17	    int numOfPlayers = 2;
+18	    int choice1 = 0, choice2 = 0, choice3 = 0; 
+19	    int handPos = 0, bonus = 0, newCards = 2;
+20	    int currPlayer = 0;
+21	    int deckCounter = 0;
+22	    int firstCard = 0;
+23	    int secondCard = 0;
+24	
+25	
+26	    int seed = 1000;
+27	
+28	    initializeGame(numOfPlayers, k, seed, &G);
+29	
+30	    printf("----------------Testing Card: %s-----------------\n", TESTCARD);
+31	
+32	    memcpy(&testG, &G, sizeof(struct gameState));
+33	
+34	    deckCounter = testG.deckCount[currPlayer];
+35	    // set top 2 cards in deck as treasure cards
+36	    testG.deck[currPlayer][deckCounter - 1] = copper; 
+37	    testG.deck[currPlayer][deckCounter - 2] = copper;
+38	
+39	    cardEffect(adventurer, choice1, choice2, choice3, &testG, handPos, &bonus);
+40	
+Breakpoint 1 at 0x1cf3: file adventurerTest.c, line 39.
+Starting program: /home/rich/Desktop/cs362/CS362-W2019/projects/mitchric/lavelltDominion/dominion/adventurerTest 
+
+Breakpoint 1, main (argc=1, argv=0x7fffffffdda8) at adventurerTest.c:39
+39	    cardEffect(adventurer, choice1, choice2, choice3, &testG, handPos, &bonus);
+cardEffect (card=7, choice1=0, choice2=0, choice3=0, state=0x7fffffff75f0, handPos=0, bonus=0x7fffffff0ed0) at dominion.c:874
+874	  int currentPlayer = whoseTurn(state);
+869	  int i;
+870	  int j;
+871	  int k;
+872	  //int x;
+873	  //int index;
+874	  int currentPlayer = whoseTurn(state);
+875	  //int nextPlayer = currentPlayer + 1;
+876	
+877	  //int tributeRevealedCards[2] = {-1, -1};
+878	  //int temphand[MAX_HAND];// moved above the if statement
+888	  switch (card)
+910		  return effectAdventurer(currentPlayer, state);
+Breakpoint 2 at 0x555555559265: file dominion.c, line 910.
+effectAdventurer (currentPlayer=0, state=0x7fffffff75f0) at dominion.c:649
+649	int effectAdventurer(int currentPlayer, struct gameState *state) {
+651		int z = 0; // temphand counter
+$1 = 5
+$2 = 5
+652		int cardDrawn = -1; // originally uninit (could break in future)
+653		int drawntreasure = 0;
+656		while (drawntreasure<3) { // 2 is original. playdom 30 results in P0: 0, P1: 51
+657			if (state->deckCount[currentPlayer] <1) {//if the deck is empty we need to shuffle discard and add to deck
+660			drawCard(currentPlayer, state);
+661			cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
+662			if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+663				drawntreasure++;
+656		while (drawntreasure<3) { // 2 is original. playdom 30 results in P0: 0, P1: 51
+657			if (state->deckCount[currentPlayer] <1) {//if the deck is empty we need to shuffle discard and add to deck
+660			drawCard(currentPlayer, state);
+661			cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
+662			if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+663				drawntreasure++;
+656		while (drawntreasure<3) { // 2 is original. playdom 30 results in P0: 0, P1: 51
+657			if (state->deckCount[currentPlayer] <1) {//if the deck is empty we need to shuffle discard and add to deck
+660			drawCard(currentPlayer, state);
+661			cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
+662			if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+663				drawntreasure++;
+656		while (drawntreasure<3) { // 2 is original. playdom 30 results in P0: 0, P1: 51
+670		while (z - 1 >= 0) {
+$3 = 8
+$4 = 2
+678		return 0;
+679	}
+cardEffect (card=7, choice1=0, choice2=0, choice3=0, state=0x7fffffff75f0, handPos=0, bonus=0x7fffffff0ed0) at dominion.c:1455
+1455	}
+main (argc=1, argv=0x7fffffffdda8) at adventurerTest.c:41
+41	    firstCard = testG.hand[currPlayer][testG.handCount[currPlayer]-1];
+42	    secondCard = testG.hand[currPlayer][testG.handCount[currPlayer] - 2];
+44	    printf("hand count = %d, expected = %d\n", testG.handCount[currPlayer], G.handCount[currPlayer] + newCards); 
+45	    printf("deck count = %d, expected = %d\n", testG.deckCount[currPlayer], G.deckCount[currPlayer] - newCards);
+46	    printf("First card in hand = %d, expected %d\n", firstCard, copper);
+47	    printf("Second card in hand = %d, expected %d\n", secondCard, copper);
+53	    return 0;
+54	}
+__libc_start_main (main=0x555555555aea <main>, argc=1, argv=0x7fffffffdda8, init=<optimized out>, fini=<optimized out>, 
+    rtld_fini=<optimized out>, stack_end=0x7fffffffdd98) at ../csu/libc-start.c:344
+344	../csu/libc-start.c: No such file or directory.
+[Inferior 1 (process 11621) exited normally]
+The program is not being run.
+Currently logging to "gdb.txt".
+Logs will be appended to the log file.
+Output will be logged and displayed.

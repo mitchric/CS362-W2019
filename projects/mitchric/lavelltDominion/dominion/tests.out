@@ -1,0 +1,57 @@
+Result for running Dominion tests:
+feastTest.c:
+----------------Testing Card: feast-----------------
+discard = 1, expected = 1
+discard count = 1, expected = 1
+Card 1 supply count = 7, expected = 7
+File 'feastTest.c'
+Lines executed:100.00% of 15
+Creating 'feastTest.c.gcov'
+
+adventurerTest:
+adventurerTest.c:
+----------------Testing Card: adventurer-----------------
+hand count = 8, expected = 7
+deck count = 2, expected = 3
+First card in hand = 4, expected 4
+Second card in hand = 4, expected 4
+File 'adventurerTest.c'
+Lines executed:100.00% of 24
+Creating 'adventurerTest.c.gcov'
+
+smithyTest:
+smithyTest.c:
+----------------Testing Card: smithy-----------------
+hand count = 6, expected = 7
+deck count = 3, expected = 2
+File 'smithyTest.c'
+Lines executed:100.00% of 14
+Creating 'smithyTest.c.gcov'
+
+treasureMapTest:
+treasureMapTest.c:
+----------------Testing Card: treasure map-----------------
+hand count = 5, expected = 3
+deck count = 5, expected = 9
+File 'treasureMapTest.c'
+Lines executed:100.00% of 15
+Creating 'treasureMapTest.c.gcov'
+
+randomSmithyTest:
+randomSmithyTest.c:
+----------------Testing Card: smithy-----------------
+RANDOM TESTS.
+All tests OK
+File 'randomSmithyTest.c'
+Lines executed:100.00% of 21
+Creating 'randomSmithyTest.c.gcov'
+
+randomTreasureMapTest:
+randomTreasureMapTest.c:
+----------------Testing Card: treasure map-----------------
+RANDOM TESTS.
+All tests OK
+File 'randomTreasureMapTest.c'
+Lines executed:100.00% of 24
+Creating 'randomTreasureMapTest.c.gcov'
+
